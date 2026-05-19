@@ -46,6 +46,19 @@ class Project(BaseModel, frozen=True):
 
 ```
 
+For example,
+
+```json
+[
+    {
+        user_id: 0
+        data: {
+                  "/main.py": ""
+        }
+    }
+]
+```
+
 # Code Formatting & Style Requirements
 
 To keep the codebase consistent and maintainable, please follow these formatting rules:
