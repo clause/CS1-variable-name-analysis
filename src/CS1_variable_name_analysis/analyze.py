@@ -43,7 +43,6 @@ async def run(
     queue = asyncio.Queue[tuple[int, Sequence[Violation]]]()
 
     async def csv_writer_task():
-
         with output.open("w") as f:
             writer = csv.writer(f)
             writer.writerow(
@@ -123,7 +122,6 @@ def main(
     output: Path | None,
     input: Path,
 ) -> None:
-
     output = output or input.with_suffix(".csv")
 
     projects = TypeAdapter(Sequence[Project]).validate_json(input.read_bytes())

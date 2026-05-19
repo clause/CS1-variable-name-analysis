@@ -13,8 +13,16 @@ dependencies = [
     "seaborn>=0.13.2",
 ]
 
+[tool.ruff]
+line-length = 120
+
 [tool.uv]
 package = true
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.13",
+]
 
 [project.scripts]
 analyze = "CS1_variable_name_analysis:analyze.main"
