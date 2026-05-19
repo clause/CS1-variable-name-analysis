@@ -9,15 +9,12 @@ from rich.progress import track
 
 
 class Project(BaseModel, frozen=True):
-    data: Data
     user_id: int
+    data: Data
     model_config = {"extra": "allow"}
 
     class Data(BaseModel, frozen=True):
-        source: str | None = Field(
-            default=None,
-            alias="/main.py",
-        )
+        source: str | None = Field(default=None, alias="/main.py")
         model_config = {"extra": "allow"}
 
 
@@ -126,11 +123,7 @@ def main(
 
     projects = TypeAdapter(Sequence[Project]).validate_json(input.read_bytes())
 
-    subjects = [
-        (project.user_id, project.data.source)
-        for project in projects
-        if project.data.source
-    ]
+    subjects = [(project.user_id, project.data.source) for project in projects if project.data.source]
 
     asyncio.run(run(subjects, output))
 
