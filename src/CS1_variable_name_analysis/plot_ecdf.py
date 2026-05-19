@@ -46,6 +46,19 @@ def main(
     df["name"] = df["code"].map(lambda x: CODE_NAMES.get(x, f"Unknown code ({x})"))
     summary = df.groupby(["id", "name"]).size().reset_index(name="count")
 
+    # all ids and all names that appear anywhere
+    ids = summary["id"].unique()
+    names = summary["name"].unique()
+
+    # full cartesian product
+    index = pd.MultiIndex.from_product(
+        [ids, names],
+        names=["id", "name"],
+    )
+
+    # fill missing combinations with count = 0
+    summary = summary.set_index(["id", "name"]).reindex(index, fill_value=0).reset_index()
+
     plt.figure(figsize=(5.5, 3.25))
     sns.set_theme(style="whitegrid", context="paper")
     sns.ecdfplot(data=summary, x="count", hue="name", palette="Dark2")
